@@ -4,7 +4,7 @@
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
              xmlns:tns="http://playout.capture.api.glookast.com"
              xmlns:time="http://timecode.commons.glookast.com"
-             name="Playout"
+             name="CapturePlayout"
              targetNamespace="http://playout.capture.api.glookast.com">
     <types>
         <xs:schema xmlns:tns="http://playout.capture.api.glookast.com"
@@ -14,7 +14,7 @@
                    targetNamespace="http://playout.capture.api.glookast.com">
 
             <xs:import namespace="http://timecode.commons.glookast.com"
-                       schemaLocation="../../commons/timecode/timecode.xsd"/>
+                       schemaLocation="../../../commons/timecode/timecode.xsd"/>
 
             <!-- api specific types -->
             <xs:complexType name="PlayoutStatus">
