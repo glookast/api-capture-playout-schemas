@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://playout.api.glookast.com"
+             xmlns:time="http://timecode.commons.glookast.com"
+             name="Playout"
+             targetNamespace="http://playout.api.glookast.com">
+    <types>
+        <xs:schema xmlns:tns="http://playout.api.glookast.com"
+                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                   xmlns:time="http://timecode.commons.glookast.com"
+                   version="1.0"
+                   targetNamespace="http://playout.api.glookast.com">
+
+            <xs:import namespace="http://timecode.commons.glookast.com"
+                       schemaLocation="../../commons/timecode/timecode.xsd"/>
+
+            <!-- api specific types -->
+            <xs:complexType name="PlayoutStatus">
+                <xs:sequence>
+                    <xs:element name="captureJobId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="minimumPosition" type="xs:long" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="maximumPosition" type="xs:long" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="currentPosition" type="xs:long" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="playbackRate" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <!-- request wrapper types -->
+            <xs:complexType name="RequestVoid"/>
+
+            <xs:complexType name="RequestCaptureJobId">
+                <xs:sequence>
+                    <xs:element name="captureJobId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="RequestTimecodeSource">
+                <xs:sequence>
+                    <xs:element name="timecodeSource" type="time:TimecodeSource" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="RequestEnabled">
+                <xs:sequence>
+                    <xs:element name="enabled" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="RequestPlaybackRate">
+                <xs:sequence>
+                    <xs:element name="playbackRate" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="RequestPosition">
+                <xs:sequence>
+                    <xs:element name="position" type="xs:long" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="RequestDistance">
+                <xs:sequence>
+                    <xs:element name="distance" type="xs:long" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="PlayoutExceptionDetails">
+                <xs:sequence>
+                    <xs:element name="errorCode" type="xs:int" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="detail" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <!-- request elements -->
+            <xs:element name="isPlayoutEnabled" type="tns:RequestVoid"/>
+            <xs:element name="setTimecodeSource" type="tns:RequestTimecodeSource"/>
+            <xs:element name="getTimecodeSource" type="tns:RequestVoid"/>
+            <xs:element name="setLoopPlayoutEnabled" type="tns:RequestEnabled"/>
+            <xs:element name="isLoopPlayoutEnabled" type="tns:RequestVoid"/>
+            <xs:element name="loadClip" type="tns:RequestCaptureJobId"/>
+            <xs:element name="playLive" type="tns:RequestVoid"/>
+            <xs:element name="play" type="tns:RequestPlaybackRate"/>
+            <xs:element name="pause" type="tns:RequestVoid"/>
+            <xs:element name="seek" type="tns:RequestPosition"/>
+            <xs:element name="step" type="tns:RequestDistance"/>
+            <xs:element name="getPlayoutStatus" type="tns:RequestVoid"/>
+            <xs:element name="getTimecodes" type="tns:RequestVoid"/>
+
+            <!-- exceptions -->
+            <xs:element name="PlayoutException" type="tns:PlayoutExceptionDetails"/>
+
+            <!-- response wrapper types -->
+            <xs:complexType name="ResponseVoid"/>
+
+            <xs:complexType name="ResponseBoolean">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseDouble">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseTimecodeSource">
+                <xs:sequence>
+                    <xs:element name="return" type="time:TimecodeSource" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponseListTimecodePoint">
+                <xs:sequence>
+                    <xs:element name="return" type="time:TimecodePoint" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="ResponsePlayoutStatus">
+                <xs:sequence>
+                    <xs:element name="return" type="tns:PlayoutStatus" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <!-- response elements -->
+            <xs:element name="responseVoid" type="tns:ResponseVoid"/>
+            <xs:element name="responseDouble" type="tns:ResponseDouble"/>
+            <xs:element name="responseBoolean" type="tns:ResponseBoolean"/>
+            <xs:element name="responseTimecodeSource" type="tns:ResponseTimecodeSource"/>
+            <xs:element name="responseListTimecodePoint" type="tns:ResponseListTimecodePoint"/>
+            <xs:element name="responsePlayoutStatus" type="tns:ResponsePlayoutStatus"/>
+
+        </xs:schema>
+    </types>
+
+    <!-- response messages -->
+    <message name="responseVoid">
+        <part name="parameters" element="tns:responseVoid"/>
+    </message>
+    <message name="responseBoolean">
+        <part name="parameters" element="tns:responseBoolean"/>
+    </message>
+    <message name="responseDouble">
+        <part name="parameters" element="tns:responseDouble"/>
+    </message>
+    <message name="responseTimecodeSource">
+        <part name="parameters" element="tns:responseTimecodeSource"/>
+    </message>
+    <message name="responseListTimecodePoint">
+        <part name="parameters" element="tns:responseListTimecodePoint"/>
+    </message>
+    <message name="responsePlayoutStatus">
+        <part name="parameters" element="tns:responsePlayoutStatus"/>
+    </message>
+
+    <!-- request messages -->
+    <message name="isPlayoutEnabled">
+        <part name="parameters" element="tns:isPlayoutEnabled"/>
+    </message>
+    <message name="setTimecodeSource">
+        <part name="parameters" element="tns:setTimecodeSource"/>
+    </message>
+    <message name="getTimecodeSource">
+        <part name="parameters" element="tns:getTimecodeSource"/>
+    </message>
+    <message name="setLoopPlayoutEnabled">
+        <part name="parameters" element="tns:setLoopPlayoutEnabled"/>
+    </message>
+    <message name="isLoopPlayoutEnabled">
+        <part name="parameters" element="tns:isLoopPlayoutEnabled"/>
+    </message>
+    <message name="loadClip">
+        <part name="parameters" element="tns:loadClip"/>
+    </message>
+    <message name="playLive">
+        <part name="parameters" element="tns:playLive"/>
+    </message>
+    <message name="play">
+        <part name="parameters" element="tns:play"/>
+    </message>
+    <message name="pause">
+        <part name="parameters" element="tns:pause"/>
+    </message>
+    <message name="seek">
+        <part name="parameters" element="tns:seek"/>
+    </message>
+    <message name="step">
+        <part name="parameters" element="tns:step"/>
+    </message>
+    <message name="getTimecodes">
+        <part name="parameters" element="tns:getTimecodes"/>
+    </message>
+    <message name="getPlayoutStatus">
+        <part name="parameters" element="tns:getPlayoutStatus"/>
+    </message>
+
+    <message name="PlayoutException">
+        <part name="fault" element="tns:PlayoutException"/>
+    </message>
+
+    <portType name="PlayoutPort">
+        <operation name="isPlayoutEnabled">
+            <input message="tns:isPlayoutEnabled"/>
+            <output message="tns:responseBoolean"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="setTimecodeSource">
+            <input message="tns:setTimecodeSource"/>
+            <output message="tns:responseVoid"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="getTimecodeSource">
+            <input message="tns:getTimecodeSource"/>
+            <output message="tns:responseTimecodeSource"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="setLoopPlayoutEnabled">
+            <input message="tns:setLoopPlayoutEnabled"/>
+            <output message="tns:responseVoid"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="isLoopPlayoutEnabled">
+            <input message="tns:isLoopPlayoutEnabled"/>
+            <output message="tns:responseBoolean"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="loadClip">
+            <input message="tns:loadClip"/>
+            <output message="tns:responseVoid"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="playLive">
+            <input message="tns:playLive"/>
+            <output message="tns:responseVoid"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="play">
+            <input message="tns:play"/>
+            <output message="tns:responseDouble"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="pause">
+            <input message="tns:pause"/>
+            <output message="tns:responseVoid"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="seek">
+            <input message="tns:seek"/>
+            <output message="tns:responseBoolean"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="step">
+            <input message="tns:step"/>
+            <output message="tns:responseBoolean"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="getTimecodes">
+            <input message="tns:getTimecodes"/>
+            <output message="tns:responseListTimecodePoint"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+        <operation name="getPlayoutStatus">
+            <input message="tns:getPlayoutStatus"/>
+            <output message="tns:responsePlayoutStatus"/>
+            <fault name="PlayoutException" message="tns:PlayoutException"/>
+        </operation>
+
+    </portType>
+    <binding name="PlayoutBinding" type="tns:PlayoutPort">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="isPlayoutEnabled">
+            <soap:operation soapAction="http://playout.api.glookast.com/isPlayoutEnabled"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="setTimecodeSource">
+            <soap:operation soapAction="http://playout.api.glookast.com/setTimecodeSource"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getTimecodeSource">
+            <soap:operation soapAction="http://playout.api.glookast.com/getTimecodeSource"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="setLoopPlayoutEnabled">
+            <soap:operation soapAction="http://playout.api.glookast.com/setLoopPlayoutEnabled"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="isLoopPlayoutEnabled">
+            <soap:operation soapAction="http://playout.api.glookast.com/isLoopPlayoutEnabled"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="loadClip">
+            <soap:operation soapAction="http://playout.api.glookast.com/loadClip"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="playLive">
+            <soap:operation soapAction="http://playout.api.glookast.com/playLive"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="play">
+            <soap:operation soapAction="http://playout.api.glookast.com/play"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="pause">
+            <soap:operation soapAction="http://playout.api.glookast.com/pause"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="seek">
+            <soap:operation soapAction="http://playout.api.glookast.com/seek"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="step">
+            <soap:operation soapAction="http://playout.api.glookast.com/step"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getTimecodes">
+            <soap:operation soapAction="http://playout.api.glookast.com/getTimecodes"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getPlayoutStatus">
+            <soap:operation soapAction="http://playout.api.glookast.com/getPlayoutStatus"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="PlayoutException">
+                <soap:fault name="PlayoutException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="PlayoutService">
+        <port name="PlayoutPort" binding="tns:PlayoutBinding">
+            <soap:address location="http://host/path/PlayoutPort"/>
+        </port>
+    </service>
+</definitions>
