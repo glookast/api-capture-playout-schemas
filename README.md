@@ -1,1 +1,1 @@
-# api-playout-schemas
+# api-capture-playout-schemas
