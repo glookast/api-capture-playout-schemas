@@ -2,16 +2,16 @@
 <definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
              xmlns:xs="http://www.w3.org/2001/XMLSchema"
              xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-             xmlns:tns="http://playout.api.glookast.com"
+             xmlns:tns="http://playout.capture.api.glookast.com"
              xmlns:time="http://timecode.commons.glookast.com"
              name="Playout"
-             targetNamespace="http://playout.api.glookast.com">
+             targetNamespace="http://playout.capture.api.glookast.com">
     <types>
-        <xs:schema xmlns:tns="http://playout.api.glookast.com"
+        <xs:schema xmlns:tns="http://playout.capture.api.glookast.com"
                    xmlns:xs="http://www.w3.org/2001/XMLSchema"
                    xmlns:time="http://timecode.commons.glookast.com"
                    version="1.0"
-                   targetNamespace="http://playout.api.glookast.com">
+                   targetNamespace="http://playout.capture.api.glookast.com">
 
             <xs:import namespace="http://timecode.commons.glookast.com"
                        schemaLocation="../../commons/timecode/timecode.xsd"/>
@@ -66,7 +66,7 @@
                 </xs:sequence>
             </xs:complexType>
 
-            <xs:complexType name="PlayoutExceptionDetails">
+            <xs:complexType name="CapturePlayoutExceptionDetails">
                 <xs:sequence>
                     <xs:element name="errorCode" type="xs:int" minOccurs="1" maxOccurs="1"/>
                     <xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
@@ -90,7 +90,7 @@
             <xs:element name="getTimecodes" type="tns:RequestVoid"/>
 
             <!-- exceptions -->
-            <xs:element name="PlayoutException" type="tns:PlayoutExceptionDetails"/>
+            <xs:element name="CapturePlayoutException" type="tns:CapturePlayoutExceptionDetails"/>
 
             <!-- response wrapper types -->
             <xs:complexType name="ResponseVoid"/>
@@ -197,240 +197,240 @@
         <part name="parameters" element="tns:getPlayoutStatus"/>
     </message>
 
-    <message name="PlayoutException">
-        <part name="fault" element="tns:PlayoutException"/>
+    <message name="CapturePlayoutException">
+        <part name="fault" element="tns:CapturePlayoutException"/>
     </message>
 
-    <portType name="PlayoutPort">
+    <portType name="CapturePlayoutPort">
         <operation name="isPlayoutEnabled">
             <input message="tns:isPlayoutEnabled"/>
             <output message="tns:responseBoolean"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="setTimecodeSource">
             <input message="tns:setTimecodeSource"/>
             <output message="tns:responseVoid"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="getTimecodeSource">
             <input message="tns:getTimecodeSource"/>
             <output message="tns:responseTimecodeSource"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="setLoopPlayoutEnabled">
             <input message="tns:setLoopPlayoutEnabled"/>
             <output message="tns:responseVoid"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="isLoopPlayoutEnabled">
             <input message="tns:isLoopPlayoutEnabled"/>
             <output message="tns:responseBoolean"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="loadClip">
             <input message="tns:loadClip"/>
             <output message="tns:responseVoid"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="playLive">
             <input message="tns:playLive"/>
             <output message="tns:responseVoid"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="play">
             <input message="tns:play"/>
             <output message="tns:responseDouble"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="pause">
             <input message="tns:pause"/>
             <output message="tns:responseVoid"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="seek">
             <input message="tns:seek"/>
             <output message="tns:responseBoolean"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="step">
             <input message="tns:step"/>
             <output message="tns:responseBoolean"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="getTimecodes">
             <input message="tns:getTimecodes"/>
             <output message="tns:responseListTimecodePoint"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
         <operation name="getPlayoutStatus">
             <input message="tns:getPlayoutStatus"/>
             <output message="tns:responsePlayoutStatus"/>
-            <fault name="PlayoutException" message="tns:PlayoutException"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
 
     </portType>
-    <binding name="PlayoutBinding" type="tns:PlayoutPort">
+    <binding name="CapturePlayoutBinding" type="tns:CapturePlayoutPort">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
         <operation name="isPlayoutEnabled">
-            <soap:operation soapAction="http://playout.api.glookast.com/isPlayoutEnabled"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/isPlayoutEnabled"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="setTimecodeSource">
-            <soap:operation soapAction="http://playout.api.glookast.com/setTimecodeSource"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/setTimecodeSource"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="getTimecodeSource">
-            <soap:operation soapAction="http://playout.api.glookast.com/getTimecodeSource"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/getTimecodeSource"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="setLoopPlayoutEnabled">
-            <soap:operation soapAction="http://playout.api.glookast.com/setLoopPlayoutEnabled"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/setLoopPlayoutEnabled"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="isLoopPlayoutEnabled">
-            <soap:operation soapAction="http://playout.api.glookast.com/isLoopPlayoutEnabled"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/isLoopPlayoutEnabled"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="loadClip">
-            <soap:operation soapAction="http://playout.api.glookast.com/loadClip"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/loadClip"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="playLive">
-            <soap:operation soapAction="http://playout.api.glookast.com/playLive"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/playLive"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="play">
-            <soap:operation soapAction="http://playout.api.glookast.com/play"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/play"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="pause">
-            <soap:operation soapAction="http://playout.api.glookast.com/pause"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/pause"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="seek">
-            <soap:operation soapAction="http://playout.api.glookast.com/seek"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/seek"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="step">
-            <soap:operation soapAction="http://playout.api.glookast.com/step"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/step"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="getTimecodes">
-            <soap:operation soapAction="http://playout.api.glookast.com/getTimecodes"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/getTimecodes"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
         <operation name="getPlayoutStatus">
-            <soap:operation soapAction="http://playout.api.glookast.com/getPlayoutStatus"/>
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/getPlayoutStatus"/>
             <input>
                 <soap:body use="literal"/>
             </input>
             <output>
                 <soap:body use="literal"/>
             </output>
-            <fault name="PlayoutException">
-                <soap:fault name="PlayoutException" use="literal"/>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
             </fault>
         </operation>
     </binding>
-    <service name="PlayoutService">
-        <port name="PlayoutPort" binding="tns:PlayoutBinding">
-            <soap:address location="http://host/path/PlayoutPort"/>
+    <service name="CapturePlayoutService">
+        <port name="CapturePlayoutPort" binding="tns:CapturePlayoutBinding">
+            <soap:address location="http://host/path/CapturePlayoutPort"/>
         </port>
     </service>
 </definitions>

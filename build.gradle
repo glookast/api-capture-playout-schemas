@@ -83,16 +83,16 @@ uploadArchives {
             }
 
             pom.project {
-                name "api-playout-schemas"
+                name "api-capture-playout-schemas"
                 packaging "jar"
                 // optionally artifactId can be defined here
                 description "XML schemas and wsdls used for interfacing with Glookast Products"
-                url "http://github.com/glookast/api-playout-schemas"
+                url "http://github.com/glookast/api-capture-playout-schemas"
 
                 scm {
-                    connection "scm:git:git://github.com/glookast/api-playout-schemas.git"
-                    developerConnection "scm:git:ssh://github.com:glookast/api-playout-schemas.git"
-                    url "http://github.com/glookast/api-playout-schemas/tree/master"
+                    connection "scm:git:git://github.com/glookast/api-capture-playout-schemas.git"
+                    developerConnection "scm:git:ssh://github.com:glookast/api-capture-playout-schemas.git"
+                    url "http://github.com/glookast/api-capture-playout-schemas/tree/master"
                 }
 
                 licenses {
