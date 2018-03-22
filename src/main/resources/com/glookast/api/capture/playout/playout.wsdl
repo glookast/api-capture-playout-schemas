@@ -78,6 +78,7 @@
             </xs:complexType>
 
             <!-- request elements -->
+            <xs:element name="isEnabled" type="tns:RequestVoid"/>
             <xs:element name="setTimecodeSource" type="tns:RequestTimecodeSource"/>
             <xs:element name="setLoopEnabled" type="tns:RequestEnabled"/>
             <xs:element name="load" type="tns:RequestCaptureJobId"/>
