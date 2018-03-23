@@ -21,6 +21,8 @@
                 <xs:sequence>
                     <xs:element name="timecodeSource" type="time:TimecodeSource" minOccurs="1" maxOccurs="1"/>
                     <xs:element name="loopEnabled" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="inputChannel" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="outputChannel" type="xs:string" minOccurs="1" maxOccurs="1"/>
                     <xs:element name="playbackRate" type="xs:double" minOccurs="1" maxOccurs="1"/>
                     <xs:element name="captureJobId" type="xs:string" minOccurs="1" maxOccurs="1"/>
                     <xs:element name="minimumPosition" type="xs:long" minOccurs="1" maxOccurs="1"/>
