@@ -20,6 +20,7 @@
             <xs:complexType name="PlayoutStatus">
                 <xs:sequence>
                     <xs:element name="timecodeSource" type="time:TimecodeSource" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="autoPlayEnabled" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
                     <xs:element name="loopEnabled" type="xs:boolean" minOccurs="1" maxOccurs="1"/>
                     <xs:element name="inputChannel" type="xs:string" minOccurs="1" maxOccurs="1"/>
                     <xs:element name="outputChannel" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -82,6 +83,7 @@
             <!-- request elements -->
             <xs:element name="isEnabled" type="tns:RequestVoid"/>
             <xs:element name="setTimecodeSource" type="tns:RequestTimecodeSource"/>
+            <xs:element name="setAutoPlayEnabled" type="tns:RequestEnabled"/>
             <xs:element name="setLoopEnabled" type="tns:RequestEnabled"/>
             <xs:element name="load" type="tns:RequestCaptureJobId"/>
             <xs:element name="eject" type="tns:RequestVoid"/>
@@ -91,7 +93,6 @@
             <xs:element name="seek" type="tns:RequestPosition"/>
             <xs:element name="step" type="tns:RequestDistance"/>
             <xs:element name="getPlayoutStatus" type="tns:RequestVoid"/>
-            <xs:element name="getTimecodeSequences" type="tns:RequestVoid"/>
 
             <!-- exceptions -->
             <xs:element name="CapturePlayoutException" type="tns:CapturePlayoutExceptionDetails"/>
@@ -117,17 +118,10 @@
                 </xs:sequence>
             </xs:complexType>
 
-            <xs:complexType name="ResponseListTimecodeSequence">
-                <xs:sequence>
-                    <xs:element name="return" type="time:TimecodeSequence" minOccurs="0" maxOccurs="unbounded"/>
-                </xs:sequence>
-            </xs:complexType>
-
             <!-- response elements -->
             <xs:element name="responseVoid" type="tns:ResponseVoid"/>
             <xs:element name="responseDouble" type="tns:ResponseDouble"/>
             <xs:element name="responseBoolean" type="tns:ResponseBoolean"/>
-            <xs:element name="responseListTimecodePoint" type="tns:ResponseListTimecodeSequence"/>
             <xs:element name="responsePlayoutStatus" type="tns:ResponsePlayoutStatus"/>
 
         </xs:schema>
@@ -146,9 +140,6 @@
     <message name="responseTimecodeSource">
         <part name="parameters" element="tns:responseTimecodeSource"/>
     </message>
-    <message name="responseListTimecodePoint">
-        <part name="parameters" element="tns:responseListTimecodePoint"/>
-    </message>
     <message name="responsePlayoutStatus">
         <part name="parameters" element="tns:responsePlayoutStatus"/>
     </message>
@@ -159,6 +150,9 @@
     </message>
     <message name="setTimecodeSource">
         <part name="parameters" element="tns:setTimecodeSource"/>
+    </message>
+    <message name="setAutoPlayEnabled">
+        <part name="parameters" element="tns:setAutoPlayEnabled"/>
     </message>
     <message name="setLoopEnabled">
         <part name="parameters" element="tns:setLoopEnabled"/>
@@ -184,9 +178,6 @@
     <message name="step">
         <part name="parameters" element="tns:step"/>
     </message>
-    <message name="getTimecodeSequences">
-        <part name="parameters" element="tns:getTimecodeSequences"/>
-    </message>
     <message name="getPlayoutStatus">
         <part name="parameters" element="tns:getPlayoutStatus"/>
     </message>
@@ -203,6 +194,11 @@
         </operation>
         <operation name="setTimecodeSource">
             <input message="tns:setTimecodeSource"/>
+            <output message="tns:responseVoid"/>
+            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
+        </operation>
+        <operation name="setAutoPlayEnabled">
+            <input message="tns:setAutoPlayEnabled"/>
             <output message="tns:responseVoid"/>
             <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
@@ -251,11 +247,6 @@
             <output message="tns:responsePlayoutStatus"/>
             <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
         </operation>
-        <operation name="getTimecodeSequences">
-            <input message="tns:getTimecodeSequences"/>
-            <output message="tns:responseListTimecodePoint"/>
-            <fault name="CapturePlayoutException" message="tns:CapturePlayoutException"/>
-        </operation>
     </portType>
     <binding name="CapturePlayoutBinding" type="tns:CapturePlayoutPort">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
@@ -273,6 +264,18 @@
         </operation>
         <operation name="setTimecodeSource">
             <soap:operation soapAction="http://playout.capture.api.glookast.com/setTimecodeSource"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="CapturePlayoutException">
+                <soap:fault name="CapturePlayoutException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="setAutoPlayEnabled">
+            <soap:operation soapAction="http://playout.capture.api.glookast.com/setAutoPlayEnabled"/>
             <input>
                 <soap:body use="literal"/>
             </input>
@@ -381,18 +384,6 @@
         </operation>
         <operation name="getPlayoutStatus">
             <soap:operation soapAction="http://playout.capture.api.glookast.com/getPlayoutStatus"/>
-            <input>
-                <soap:body use="literal"/>
-            </input>
-            <output>
-                <soap:body use="literal"/>
-            </output>
-            <fault name="CapturePlayoutException">
-                <soap:fault name="CapturePlayoutException" use="literal"/>
-            </fault>
-        </operation>
-        <operation name="getTimecodeSequences">
-            <soap:operation soapAction="http://playout.capture.api.glookast.com/getTimecodeSequences"/>
             <input>
                 <soap:body use="literal"/>
             </input>
